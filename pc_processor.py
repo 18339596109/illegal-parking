@@ -66,9 +66,6 @@ LATEST_IMAGE_PATH = os.path.join(OUTPUT_DIR, "latest.jpg")
 
 # ========== 全局变量 ==========
 no_parking_zones = []            # 存储禁停区（矩形或多边形）
-# 高德地图 API 配置（替换成你的 Key）
-AMAP_KEY = '08b2614e997dbe9b02a62574748c328a'   # 你截图中的 Key
-AMAP_URL = 'https://restapi.amap.com/v3/geocode/regeo'
 
 latest_gps = (None, None)
 latest_address = None          # 新增：存储最新地址
