@@ -17,7 +17,7 @@ print("正在加载 EasyOCR 车牌识别模型...")
 plate_reader = easyocr.Reader(['ch_sim', 'en'], gpu=False)  # gpu=False 强制使用 CPU
 print("EasyOCR 加载完成")
 def get_access_token():
-    url = "https://aip.baidubce.com/oauth/2.0/token"
+  
     params = {
         "grant_type": "client_credentials",
         "client_id": API_KEY,
@@ -31,8 +31,7 @@ def recognize_plate(vehicle_img):
         _, encoded = cv2.imencode('.jpg', vehicle_img, [cv2.IMWRITE_JPEG_QUALITY, 80])
         img_base64 = base64.b64encode(encoded).decode('utf-8')
         
-        token = get_access_token()
-        url = f"https://aip.baidubce.com/rest/2.0/ocr/v1/license_plate?access_token={token}"
+      
         payload = {"image": img_base64}
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         
@@ -90,26 +89,6 @@ def is_violation(bbox, zones):
             return True
     return False
 
-def reverse_geocode(lat, lon):
-    """调用高德逆地理编码，返回中文地址字符串，失败返回 None"""
-    try:
-        import requests
-        params = {
-            'location': f'{lon},{lat}',   # 注意顺序：经度,纬度
-            'key': AMAP_KEY,
-            'radius': 200,
-            'extensions': 'base'
-        }
-        resp = requests.get(AMAP_URL, params=params, timeout=5)
-        data = resp.json()
-        if data.get('status') == '1' and data.get('regeocode'):
-            return data['regeocode']['formatted_address']
-        else:
-            print(f"高德 API 错误: {data.get('info')}")
-            return None
-    except Exception as e:
-        print(f"逆地理编码异常: {e}")
-        return None
     
 def gps_receiver():
     global latest_gps
@@ -132,7 +111,7 @@ def gps_receiver():
                 if line.strip():
                     gps = json.loads(line)
                     lat, lon = gps['latitude'], gps['longitude']
-                    # 调用高德API获取地址
+                  
                     address = reverse_geocode(lat, lon)
                     with gps_lock:
                         latest_gps = (lat, lon)
