@@ -16,9 +16,6 @@ import threading
 print("正在加载 EasyOCR 车牌识别模型...")
 plate_reader = easyocr.Reader(['ch_sim', 'en'], gpu=False)  # gpu=False 强制使用 CPU
 print("EasyOCR 加载完成")
-# 你的百度API密钥（请替换为真实值）
-API_KEY = "Z5Ifc2c9Rqn2Pgo5GDJiyVAH"
-SECRET_KEY = "Vn8HpQbQQqrWRYjigSo4hf3AooJqqqob"
 def get_access_token():
     url = "https://aip.baidubce.com/oauth/2.0/token"
     params = {
